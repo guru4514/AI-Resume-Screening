@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Resume Scanner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="bg-glow bg-glow-a"></div>
+  <div class="bg-glow bg-glow-b"></div>
+
+  <main class="page-wrap">
+    <section class="hero reveal">
+      <p class="eyebrow">Flagship Demo</p>
+      <h1>Resume Scanner</h1>
+      <p class="hero-copy">
+        Screen tech candidates with explainable AI ranking, semantic skill matching, and shortlist-ready recruiter insights.
+      </p>
+      <div class="hero-metrics">
+        <div class="metric-card reveal-stagger">
+          <span class="metric-label">Role Profiles</span>
+          <span class="metric-value">5</span>
+        </div>
+        <div class="metric-card reveal-stagger">
+          <span class="metric-label">Scoring Mode</span>
+          <span class="metric-value">Hybrid</span>
+        </div>
+        <div class="metric-card reveal-stagger">
+          <span class="metric-label">Explainability</span>
+          <span class="metric-value">Full</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard-grid">
+      <article class="panel panel-form reveal">
+        <h2>Job Context</h2>
+        <form id="analysis-form">
+          <label for="job-title">Job Title</label>
+          <input id="job-title" name="job-title" required value="Senior Backend Python Engineer" />
+
+          <label for="role-family">Role Family</label>
+          <select id="role-family" name="role-family">
+            <option value="backend">Backend</option>
+            <option value="frontend">Frontend</option>
+            <option value="data_ai">Data/AI</option>
+            <option value="devops">DevOps</option>
+            <option value="fullstack">Fullstack</option>
+            <option value="other">Other (specify below)</option>
+          </select>
+          <input id="custom-role-family" class="custom-role-input hidden" type="text" placeholder="e.g. Security, QA, Mobile, etc." />
+
+          <label for="job-description">Job Description</label>
+          <textarea id="job-description" name="job-description" rows="6" required>Looking for an engineer experienced in Python, FastAPI, PostgreSQL, Docker, and AWS. Must own API performance, observability, and reliable delivery in production.</textarea>
+
+          <label for="must-have">Must-Have Skills (comma-separated)</label>
+          <input id="must-have" name="must-have" value="python, fastapi, aws" />
+
+          <label for="nice-to-have">Nice-To-Have Skills (comma-separated)</label>
+          <input id="nice-to-have" name="nice-to-have" value="kubernetes, terraform, github actions" />
+
+          <h3>Analysis Mode</h3>
+          <div class="mode-switch" role="radiogroup" aria-label="Analysis mode">
+            <label class="mode-pill">
+              <input type="radio" name="analysis-mode" value="text" checked />
+              <span>Paste Resume Text</span>
+            </label>
+            <label class="mode-pill">
+              <input type="radio" name="analysis-mode" value="files" />
+              <span>Upload Resume Files</span>
+            </label>
+          </div>
+
+          <h3>Candidate Input</h3>
+          <section id="text-mode-section" class="mode-section">
+            <div id="candidate-list" class="candidate-list"></div>
+          </section>
+
+          <section id="file-mode-section" class="mode-section hidden-mode">
+            <label for="resume-files">Resume Files (PDF, DOCX, TXT)</label>
+            <input id="resume-files" class="hidden-file-input" type="file" accept=".pdf,.docx,.txt" multiple />
+            <div id="drop-zone" class="drop-zone" tabindex="0" role="button" aria-label="Upload resume files">
+              <p class="drop-title">Drop files here or click to browse</p>
+              <p class="drop-subtitle">Supports PDF, DOCX, TXT</p>
+            </div>
+            <p class="field-note">
+              Candidate name and years of experience are auto-extracted from resume content.
+            </p>
+            <div id="upload-preview" class="upload-preview empty-state">
+              <p>No files selected.</p>
+            </div>
+            <div id="preview-status" class="preview-status hidden"></div>
+            <div id="profile-preview-cards" class="profile-preview-cards empty-state">
+              <p>Parsed profile previews will appear here.</p>
+            </div>
+          </section>
+
+          <div class="actions">
+            <button type="button" class="btn btn-secondary" id="add-candidate">Add Candidate</button>
+            <button type="submit" class="btn btn-primary">Run AI Screening</button>
+          </div>
+        </form>
+      </article>
+
+      <article class="panel panel-results reveal">
+        <div class="results-header">
+          <h2>Leaderboard</h2>
+          <p id="result-subtitle">Run an analysis to view ranked candidates.</p>
+        </div>
+
+        <div id="status-banner" class="status-banner hidden"></div>
+
+        <div id="leaderboard" class="leaderboard empty-state">
+          <p>No results yet. Use the form to generate a shortlist.</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel comparison-panel reveal">
+      <h2>Candidate Comparison</h2>
+      <p class="comparison-hint">Select up to 10 candidates to compare side-by-side.</p>
+      <div id="comparison-picker" class="comparison-picker">
+        <!-- checkboxes will be injected here -->
+      </div>
+      <div id="comparison-content" class="comparison-content empty-state">
+        <p>Run analysis and select candidates to compare score components.</p>
+      </div>
+    </section>
+  </main>
+
+  <template id="candidate-template">
+    <div class="candidate-item">
+      <input class="candidate-name" placeholder="Candidate Name" required />
+      <input class="candidate-years" type="number" min="0" step="0.5" placeholder="Years" required />
+      <textarea class="candidate-resume" rows="4" placeholder="Paste resume text" required></textarea>
+      <button type="button" class="remove-candidate">Remove</button>
+    </div>
+  </template>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

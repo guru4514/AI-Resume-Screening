@@ -1,0 +1,27 @@
+Job Title: Senior Backend Python Engineer
+
+We are hiring a Senior Backend Python Engineer to build and scale API-driven services for a SaaS platform.
+
+Must-have skills:
+- Python
+- FastAPI
+- PostgreSQL
+- Docker
+- AWS
+
+Nice-to-have skills:
+- Kubernetes
+- Terraform
+- GitHub Actions
+- Observability (metrics, logging, tracing)
+
+Responsibilities:
+- Design and ship production-grade microservices.
+- Improve API performance, reliability, and fault tolerance.
+- Own data models and SQL query efficiency.
+- Collaborate with product and frontend teams.
+- Participate in on-call and incident response.
+
+Experience:
+- 4+ years of backend engineering experience.
+- Strong software design and clean-code practices.

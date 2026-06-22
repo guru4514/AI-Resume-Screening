@@ -1,0 +1,10 @@
+fastapi==0.115.12
+uvicorn[standard]==0.34.0
+pydantic==2.10.6
+python-dotenv==1.0.1
+pytest==8.3.4
+pypdf==5.4.0
+python-docx==1.1.2
+python-multipart==0.0.20
+httpx==0.28.1
+reportlab==4.4.10
